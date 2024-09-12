@@ -6,64 +6,94 @@
     <title>Stock Guru Application</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #2f3030;
             margin: 0;
             padding: 0;
         }
-        
+
         .container {
-            width: 80%;
-            margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 70%;
+            margin: 50px auto;
+            padding: 30px;
+            background: #f9dbbb;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
-        
+
         h1 {
             text-align: center;
-        }
-        
-        .balance, .stock-section, .transaction, .bought-section {
+            color: #333;
+            font-size: 2.5em;
             margin-bottom: 20px;
         }
-        
+
         h2 {
-            margin: 0;
-            padding: 10px 0;
-            font-size: 1.2em;
+            color: #555;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
         }
-        
+
+        .balance, .stock-section, .transaction, .bought-section {
+            margin-bottom: 30px;
+        }
+
         label {
+            font-weight: bold;
             display: block;
             margin: 10px 0 5px;
         }
-        
+
         input, select, button {
             padding: 10px;
             margin: 5px 0;
             font-size: 1em;
+            width: 100%;
+            border-radius: 5px;
+            border: 1px solid #ccc;
         }
-        
+
         button {
-            background-color: #28a745;
+            background-color: #007bff;
             color: #fff;
             border: none;
             cursor: pointer;
+            width: auto;
+            padding: 10px 20px;
         }
-        
+
         button:hover {
-            background-color: #218838;
+            background-color: #0056b3;
         }
-        
+
         ul {
             list-style-type: none;
             padding: 0;
         }
-        
+
         li {
-            margin: 5px 0;
+            margin: 8px 0;
+            background-color: #a1c8f0;
+            padding: 10px;
+            border: 1px solid #de9393;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        li span.price {
+            color: #28a745;
+            font-weight: bold;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
         }
     </style>
 </head>
@@ -78,9 +108,11 @@
         <div class="stock-section">
             <h2>Available Stocks</h2>
             <ul id="stockList">
-                <li>Stock A</li>
-                <li>Stock B</li>
-                <li>Stock C</li>
+                <li>Amazon <span class="price">₹3200</span></li>
+                <li>Google <span class="price">₹2800</span></li>
+                <li>Apple <span class="price">₹3000</span></li>
+                <li>Tesla <span class="price">₹3500</span></li>
+                <li>Microsoft <span class="price">₹2500</span></li>
             </ul>
         </div>
 
@@ -88,11 +120,13 @@
             <h2>Buy Stock</h2>
             <label for="stockSelect">Select Stock:</label>
             <select id="stockSelect">
-                <option value="Stock A">Stock A</option>
-                <option value="Stock B">Stock B</option>
-                <option value="Stock C">Stock C</option>
+                <option value="Amazon">Amazon</option>
+                <option value="Google">Google</option>
+                <option value="Apple">Apple</option>
+                <option value="Tesla">Tesla</option>
+                <option value="Microsoft">Microsoft</option>
             </select>
-            <label for="stockAmount">Amount:</label>
+            <label for="stockAmount">Quantity:</label>
             <input type="number" id="stockAmount" min="1" placeholder="Enter amount">
             <button onclick="buyStock()">Buy</button>
         </div>
@@ -103,7 +137,7 @@
             <select id="boughtStockSelect">
                 <!-- Populated dynamically -->
             </select>
-            <label for="sellAmount">Amount:</label>
+            <label for="sellAmount">Quantity:</label>
             <input type="number" id="sellAmount" min="1" placeholder="Enter amount">
             <button onclick="sellStock()">Sell</button>
         </div>
@@ -115,11 +149,12 @@
             </ul>
         </div>
     </div>
+
     <script>
         let balance = 10000;
         let invested = 0;
         let stocks = {};
-        const stockPrices = { 'Stock A': 1000, 'Stock B': 2000, 'Stock C': 3000 };
+        const stockPrices = { 'Amazon': 3200, 'Google': 2800, 'Apple': 3000, 'Tesla': 3500, 'Microsoft': 2500 };
 
         document.addEventListener('DOMContentLoaded', () => {
             updateDisplay();
